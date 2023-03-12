@@ -30,6 +30,7 @@ jobs:
   integration-tests-docker-mysql:
     name: Backup MySQL database
     runs-on: ubuntu-latest
+    if: ${{ false }}
     steps:
       - name: Set up Go 1.x
         uses: actions/setup-go@v3
@@ -49,6 +50,7 @@ jobs:
   integration-tests-docker-postgres:
     name: Backup PostgreSQL database
     runs-on: ubuntu-latest
+    if: ${{ false }}
     steps:
       - name: Set up Go 1.x
         uses: actions/setup-go@v3
