@@ -15,7 +15,10 @@ docker-compose exec -T raw bash -c "mkdir -p /data/subdir && echo 'bar' > /data/
 
 docker-compose up -d bivac
 
-docker-compose exec -T bivac bivac backup docker_raw_data
+docker-compose exec bivac bivac backup docker_raw_data
+echo "--------------"
+docker-compose logs bivac
+echo "--------------"
 
 docker-compose exec -T bivac bash -c "restic -v -r s3:http://${INTERNAL_IP}:9000/testing/${HOSTNAME}/docker_raw_data/ snapshots"
 
