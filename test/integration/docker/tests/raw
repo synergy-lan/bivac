@@ -17,8 +17,10 @@ docker-compose up -d bivac
 
 docker-compose exec -T bivac bivac backup docker_raw_data
 
-TEST_1=$(docker-compose exec -T bivac bash -c "restic -q -r s3:http://${INTERNAL_IP}:9000/testing/${HOSTNAME}/docker_raw_data/ dump latest /var/lib/docker/volumes/docker_raw_data/_data/foo")
-TEST_2=$(docker-compose exec -T bivac bash -c "restic -q -r s3:http://${INTERNAL_IP}:9000/testing/${HOSTNAME}/docker_raw_data/ dump latest /var/lib/docker/volumes/docker_raw_data/_data/subdir/bar")
+docker-compose exec -T bivac bash -c "restic -v -r s3:http://${INTERNAL_IP}:9000/testing/${HOSTNAME}/docker_raw_data/ snapshots"
+
+TEST_1=$(docker-compose exec -T bivac bash -c "restic -v -r s3:http://${INTERNAL_IP}:9000/testing/${HOSTNAME}/docker_raw_data/ dump latest /var/lib/docker/volumes/docker_raw_data/_data/foo")
+TEST_2=$(docker-compose exec -T bivac bash -c "restic -v -r s3:http://${INTERNAL_IP}:9000/testing/${HOSTNAME}/docker_raw_data/ dump latest /var/lib/docker/volumes/docker_raw_data/_data/subdir/bar")
 
 if [ "${TEST_1}" != "foo" ]; then
   echo "${TEST_1} != \"foo\"."
