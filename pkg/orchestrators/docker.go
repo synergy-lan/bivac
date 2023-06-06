@@ -63,7 +63,7 @@ func (o *DockerOrchestrator) GetVolumes(volumeFilters volume.Filters) (volumes [
 		return
 	}
 
-	vols, err := o.client.VolumeList(context.Background(), filters.NewArgs())
+	vols, err := o.client.VolumeList(context.Background(), types.ListOptions{})
 	if err != nil {
 		err = fmt.Errorf("failed to list Docker volumes: %v", err)
 		return
