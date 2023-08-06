@@ -9,7 +9,7 @@
 	else \
 	  mysqldump --opt --max_allowed_packet=16M --all-databases --extended-insert --password=$MYSQL_ROOT_PASSWORD > $volume/backups/all.sql; \
 	fi"""
-	detect_cmd = "[ -d $volume/mysql ]"
+	detect_cmd = "[[ -f $volume/public_key.pem ]]"
 	post_cmd = "rm -rf $volume/backups"
 	backup_dir = "backups"
 
