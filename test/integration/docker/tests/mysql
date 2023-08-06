@@ -20,6 +20,8 @@ docker-compose exec -T bivac bivac backup docker_mysql_data
 
 docker-compose exec -T bivac bash -c "restic -q -r s3:http://${INTERNAL_IP}:9000/testing/${HOSTNAME}/docker_mysql_data/ dump latest /var/lib/docker/volumes/docker_mysql_data/_data/backups/all.sql > /data/mysql_dump.sql"
 
+docker-compose exec -T bivac bash -c "restic -q -r s3:http://${INTERNAL_IP}:9000/testing/${HOSTNAME}/docker_mysql_data/ ls -l latest"
+
 docker-compose down -v
 
 docker-compose up -d mysql
