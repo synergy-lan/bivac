@@ -10,8 +10,8 @@ services:
       - "9000:9000"
 
   bivac:
-    #image: bivac-testing
-    image: quay.io/synergylan/bivac:debug
+    image: bivac-testing
+    #image: quay.io/synergylan/bivac:debug
     command: manager
     ports:
       - "8182:8182"
