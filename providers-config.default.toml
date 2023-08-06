@@ -9,19 +9,19 @@
 	else \
 	  mysqldump --opt --max_allowed_packet=16M --all-databases --extended-insert --password=$MYSQL_ROOT_PASSWORD > $volume/backups/all.sql; \
 	fi"""
-	detect_cmd = "[[ -d $volume/mysql ]]"
+	detect_cmd = "[ -d $volume/mysql ]"
 	post_cmd = "rm -rf $volume/backups"
 	backup_dir = "backups"
 
 	[providers.postgresql]
 	pre_cmd = "mkdir -p $volume/backups && pg_dumpall --clean -Upostgres > $volume/backups/all.sql"
 	post_cmd = "rm -rf $volume/backups"
-	detect_cmd = "[[ -f $volume/PG_VERSION ]]"
+	detect_cmd = "[ -f $volume/PG_VERSION ]"
 	backup_dir = "backups"
 
 	[providers.openldap]
 	pre_cmd = "mkdir -p $volume/backups && slapcat > $volume/backups/all.ldif"
-	detect_cmd = "[[ -f $volume/DB_CONFIG ]]"
+	detect_cmd = "[ -f $volume/DB_CONFIG ]"
 	backup_dir = "backups"
 	
 	[providers.mongo]
@@ -31,5 +31,5 @@
 	  mongodump -o $volume/backups --username=$MONGO_INITDB_ROOT_USERNAME --password=$MONGO_INITDB_ROOT_PASSWORD; \
 	fi"""
 	post_cmd = "rm -rf $volume/backups"
-	detect_cmd = "[[ -f $volume/mongod.lock ]]"
+	detect_cmd = "[ -f $volume/mongod.lock ]"
 	backup_dir = "backups"
