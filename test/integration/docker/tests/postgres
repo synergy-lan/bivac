@@ -18,6 +18,8 @@ docker-compose up -d bivac
 
 docker-compose exec -T bivac bivac backup docker_postgres_data
 
+docker-compose exec -T postgres ls -laR /var/lib/postgresql/data
+
 docker-compose run restic -q -r s3:http://${INTERNAL_IP}:9000/testing/${HOSTNAME}/docker_postgres_data/ dump latest /var/lib/docker/volumes/docker_postgres_data/_data/backups/all.sql > postgres_dump.sql
 
 docker-compose exec -T bivac bash -c "restic -r s3:http://${INTERNAL_IP}:9000/testing/${HOSTNAME}/docker_postgres_data/ ls -l latest"
