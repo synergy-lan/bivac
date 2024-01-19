@@ -214,7 +214,7 @@ func (o *KubernetesOrchestrator) DeployAgent(image string, cmd, envs []string, v
 		err = fmt.Errorf("failed to create agent: %s", err)
 	}
 
-	pod, err := o.client.CoreV1().Pods(v.Namespace).Create(&apiv1.Pod{
+	pod, err := o.client.CoreV1().Pods(v.Namespace).Create(context.TODO(),&apiv1.Pod{
 		ObjectMeta: metav1.ObjectMeta{
 			GenerateName: "bivac-agent-",
 			Labels:       o.getAgentLabels(),
