@@ -6,7 +6,7 @@ toolchain go1.22.0
 
 require (
 	github.com/BurntSushi/toml v1.3.2
-	github.com/docker/docker v23.0.8+incompatible
+	github.com/docker/docker v24.0.9+incompatible
 	github.com/golang/mock v1.6.0
 	github.com/gorilla/mux v1.8.1
 	github.com/jinzhu/copier v0.4.0
