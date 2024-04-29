@@ -55,8 +55,8 @@ services:
     image: restic/restic
     environment:
       RESTIC_PASSWORD: foo
-      AWS_ACCESS_KEY_ID: the_access_key
-      AWS_SECRET_ACCESS_KEY: the_secret_key
+      AWS_ACCESS_KEY_ID: the_root_user
+      AWS_SECRET_ACCESS_KEY: the_root_password
 
 volumes:
   mysql_data: {}
