@@ -153,7 +153,7 @@ func (o *DockerOrchestrator) DeployAgent(image string, cmd []string, envs []stri
 	}
 	defer o.RemoveContainer(container.ID)
 
-	err = o.client.ContainerStart(context.Background(), container.ID, types.ContainerStartOptions{})
+	err = o.client.ContainerStart(context.Background(), container.ID, containertypes.StartOptions{})
 	if err != nil {
 		err = fmt.Errorf("failed to start container: %s", err)
 		return
@@ -174,7 +174,7 @@ func (o *DockerOrchestrator) DeployAgent(image string, cmd []string, envs []stri
 		}
 	}
 
-	body, err := o.client.ContainerLogs(context.Background(), container.ID, types.ContainerLogsOptions{
+	body, err := o.client.ContainerLogs(context.Background(), container.ID, containertypes.LogsOptions{
 		ShowStdout: true,
 		ShowStderr: true,
 		Details:    true,
@@ -212,7 +212,7 @@ func (o *DockerOrchestrator) DeployAgent(image string, cmd []string, envs []stri
 
 // RemoveContainer removes a container based on its ID
 func (o *DockerOrchestrator) RemoveContainer(containerID string) (err error) {
-	err = o.client.ContainerRemove(context.Background(), containerID, types.ContainerRemoveOptions{
+	err = o.client.ContainerRemove(context.Background(), containerID, containertypes.RemoveOptions{
 		Force:         true,
 		RemoveVolumes: true,
 	})
@@ -252,7 +252,7 @@ func (o *DockerOrchestrator) PullImage(image string) (err error) {
 
 // GetContainersMountingVolume returns mounted volumes
 func (o *DockerOrchestrator) GetContainersMountingVolume(v *volume.Volume) (mountedVolumes []*volume.MountedVolume, err error) {
-	c, err := o.client.ContainerList(context.Background(), types.ContainerListOptions{})
+	c, err := o.client.ContainerList(context.Background(), containertypes.ListOptions{})
 	if err != nil {
 		err = fmt.Errorf("failed to list containers: %s", err)
 		return
@@ -314,7 +314,7 @@ func (o *DockerOrchestrator) IsNodeAvailable(hostID string) (ok bool, err error)
 
 // RetrieveOrphanAgents returns the list of orphan Bivac agents
 func (o *DockerOrchestrator) RetrieveOrphanAgents() (containers map[string]string, err error) {
-	c, err := o.client.ContainerList(context.Background(), types.ContainerListOptions{})
+	c, err := o.client.ContainerList(context.Background(), containertypes.ListOptions{})
 	if err != nil {
 		err = fmt.Errorf("failed to list containers: %s", err)
 		return
@@ -344,7 +344,7 @@ func (o *DockerOrchestrator) AttachOrphanAgent(containerID, namespace string) (s
 
 	defer o.RemoveContainer(container.ID)
 
-	err = o.client.ContainerStart(context.Background(), container.ID, types.ContainerStartOptions{})
+	err = o.client.ContainerStart(context.Background(), container.ID, containertypes.StartOptions{})
 	if err != nil {
 		err = fmt.Errorf("failed to start container: %s", err)
 		return
@@ -365,7 +365,7 @@ func (o *DockerOrchestrator) AttachOrphanAgent(containerID, namespace string) (s
 		}
 	}
 
-	body, err := o.client.ContainerLogs(context.Background(), container.ID, types.ContainerLogsOptions{
+	body, err := o.client.ContainerLogs(context.Background(), container.ID, containertypes.LogsOptions{
 		ShowStdout: true,
 		ShowStderr: true,
 		Details:    true,
