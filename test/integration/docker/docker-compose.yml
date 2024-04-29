@@ -3,8 +3,8 @@ services:
   minio:
     image: minio/minio
     environment:
-      MINIO_ACCESS_KEY: the_access_key
-      MINIO_SECRET_KEY: the_secret_key
+      MINIO_ROOT_USER: the_root_user
+      MINIO_ROOT_PASSWORD: the_root_password
     command: server /data/minio
     ports:
       - "9000:9000"
@@ -19,8 +19,8 @@ services:
       - ./:/data
     environment:
       BIVAC_LOG_LEVEL: debug
-      AWS_ACCESS_KEY_ID: the_access_key
-      AWS_SECRET_ACCESS_KEY: the_secret_key
+      AWS_ACCESS_KEY_ID: the_root_user
+      AWS_SECRET_ACCESS_KEY: the_root_password
       BIVAC_TARGET_URL: ${BIVAC_TARGET_URL}
       RESTIC_PASSWORD: foo
       BIVAC_SERVER_PSK: foo
