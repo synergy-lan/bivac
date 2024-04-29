@@ -12,6 +12,7 @@ import (
 	"github.com/docker/docker/api/types"
 	containertypes "github.com/docker/docker/api/types/container"
 	"github.com/docker/docker/api/types/filters"
+	volumetypes "github.com/docker/docker/api/types/volume"
 	"github.com/docker/docker/api/types/mount"
 	docker "github.com/docker/docker/client"
 	"github.com/docker/docker/pkg/stdcopy"
@@ -63,13 +64,17 @@ func (o *DockerOrchestrator) GetVolumes(volumeFilters volume.Filters) (volumes [
 		return
 	}
 
-	vols, err := o.client.VolumeList(context.Background(), filters.NewArgs())
+
+        args := filters.NewArgs()
+        listOpts := volumetypes.ListOptions{Filters: args}
+
+	vols, err := o.client.VolumeList(context.Background(), listOpts)
 	if err != nil {
 		err = fmt.Errorf("failed to list Docker volumes: %v", err)
 		return
 	}
 
-	var voll types.Volume
+	var voll volumetypes.Volume
 	for _, vol := range vols.Volumes {
 		voll, err = o.client.VolumeInspect(context.Background(), vol.Name)
 		if err != nil {
